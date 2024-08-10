@@ -5,17 +5,40 @@ import {images} from '../../constants'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import { Link } from 'expo-router'
+import {createUser} from '../../lib/appwrite'
+import { Alert } from 'react-native'
+import { useRouter } from 'expo-router';
 const SignUp = () => {
 
+  const router = useRouter();
+  const { setUser, setIsLogged } = useGlobalContext();
   const[isSubmitting, setIsSubmitting] = useState(false)
+ 
   const[form,setForm]=useState({
     username:'',
     email: "",
     password: "",
   })
 
-  const submit = () => {
+  const submit = async () => {
+    if(!form.username ||!form.email ||!form.password){
+      Alert.alert('Error', 'Please fill all the fields')
+    }
 
+    setIsSubmitting(true);
+
+    try {
+      const result = await createUser(form.email, form.password, form.username);
+      setUser(result);
+      setIsLogged(true);
+      router.replace('/home')
+
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    }finally{
+      setIsSubmitting(false);
+    }
+     
   }
 
   return (

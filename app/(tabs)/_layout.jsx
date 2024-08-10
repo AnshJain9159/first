@@ -48,7 +48,7 @@ const TabsLayout = () => {
             focused={focused}
 
           />
-        )
+        ),
       }}
     />
        <Tabs.Screen
