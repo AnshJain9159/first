@@ -8,6 +8,7 @@ import { Link } from 'expo-router'
 import {createUser} from '../../lib/appwrite'
 import { Alert } from 'react-native'
 import { useRouter } from 'expo-router';
+import { useGlobalContext } from "../../context/GlobalProvider";
 const SignUp = () => {
 
   const router = useRouter();

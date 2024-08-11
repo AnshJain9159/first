@@ -1,29 +1,35 @@
-import React from 'react'
-import { Stack } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
+import { Redirect, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+
+//import { Loader } from "../../components";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const AuthLayout = () => {
+  const { isloading, isLoggedIn } = useGlobalContext();
+
+  if (!isloading && isLoggedIn) return <Redirect href="/home" />;
 
   return (
-   <>
-   <Stack>
-      <Stack.Screen
-      name="sign-in"
-      options={{
-        headerShown:false
-      }}
-      />
-      <Stack.Screen
-      name="sign-up"
-      options={{
-        headerShown:false
-      }}
-      />
-      
-    </Stack>
-    <StatusBar backgroundColor='#161622' style='light'/>
-    </>
-  )
-}
+    <>
+      <Stack>
+        <Stack.Screen
+          name="sign-in"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="sign-up"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack>
 
-export default AuthLayout
+      {/* <Loader isLoading={isloading} /> */}
+      <StatusBar backgroundColor="#161622" style="light" />
+    </>
+  );
+};
+
+export default AuthLayout;

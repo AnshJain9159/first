@@ -4,14 +4,14 @@ import CustomButton from '../../components/CustomButton'
 import {images} from '../../constants'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { Alert } from 'react-native'
 import { getCurrentUser, signIn } from "../../lib/appwrite";
 import useGlobalContext from "../../context/GlobalProvider"
 const SignIn = () => {
   const { setUser, setIsLogged } = useGlobalContext();
   const[isSubmitting, setIsSubmitting] = useState(false)
-
+  const router = router();
   const[form,setForm]=useState({
     email: "",
     password: "",
@@ -20,6 +20,7 @@ const SignIn = () => {
   const submit = async () => {
     if(!form.email ||!form.password){
       Alert.alert('Error', 'Please fill all the fields')
+      return;
     }
     
     setIsSubmitting(true);
@@ -32,7 +33,7 @@ const SignIn = () => {
 
       //console.log(result); 
       Alert.alert("Success", "User signed in successfully"); 
-      router.replace('/home')
+      router.replace('/home');
     } catch (error) {
       Alert.alert('Error', error.message)
     }finally{
@@ -72,7 +73,7 @@ const SignIn = () => {
             (e)=>setForm({...form, password: e})
           }
           otherStyles="mt-7"
-          
+          secureTextEntry
           />
           <CustomButton
             title="Sign In"
