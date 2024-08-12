@@ -14,12 +14,11 @@ const SearchInput = ({
       <View className="space-x-4 w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-secondary flex flex-row items-center">
         <TextInput
           className="text-base mt-1.5 flex-1 font-pregular"
-          value={value}
+          value={query}
           placeholder="search for a video topic"
           placeholderTextColor="#CDCDE0"
-          onChangeText={(e)=>setQuery(e)}
-          secureTextEntry={title === "Password" && !showPassword}
-          {...props}
+          onChangeText={(e)=>{setQuery(e)}}
+          
         />
 
         <TouchableOpacity
@@ -33,7 +32,7 @@ const SearchInput = ({
                 router.setParams({query})
               }
 
-              else router.push(`/search/${query}`)
+              else router.push(`/search/${query}`);
           }}
         >
             <Image
