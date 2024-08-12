@@ -7,12 +7,11 @@ import FormField from '../../components/FormField'
 import { Link } from 'expo-router'
 import {createUser} from '../../lib/appwrite'
 import { Alert } from 'react-native'
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import { useGlobalContext } from "../../context/GlobalProvider";
 const SignUp = () => {
 
-  const router = useRouter();
-  const { setUser, setIsLogged } = useGlobalContext();
+  const { setUser, setIsLoggedIn } = useGlobalContext();
   const[isSubmitting, setIsSubmitting] = useState(false)
  
   const[form,setForm]=useState({
@@ -31,7 +30,7 @@ const SignUp = () => {
     try {
       const result = await createUser(form.email, form.password, form.username);
       setUser(result);
-      setIsLogged(true);
+      setIsLoggedIn(true);
       router.replace('/home')
 
     } catch (error) {
